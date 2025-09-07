@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fatesight 개인정보 처리방침 / Privacy Policy</title>
+  <style>
+    :root { --fg:#111; --muted:#555; --bg:#fff; --card:#f7f7f9; --link:#0a66c2; }
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Apple SD Gothic Neo,Pretendard,Helvetica,Arial,sans-serif;line-height:1.6}
+    .wrap{max-width:920px;margin:40px auto;padding:0 20px}
+    header{margin-bottom:24px}
+    h1{font-size:28px;margin:0 0 6px}
+    .meta{color:var(--muted);font-size:14px}
+    nav{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 26px}
+    nav a{padding:8px 12px;border-radius:10px;background:var(--card);text-decoration:none;color:var(--fg);font-weight:600}
+    section{margin:28px 0;padding:20px;background:var(--card);border-radius:14px}
+    h2{font-size:20px;margin:0 0 12px}
+    h3{font-size:16px;margin:18px 0 8px}
+    ul,ol{margin:8px 0 8px 20px}
+    table{width:100%;border-collapse:collapse;margin:10px 0 4px}
+    th,td{border:1px solid #e5e7eb;padding:10px;vertical-align:top}
+    th{background:#fafafa;text-align:left}
+    a{color:var(--link)}
+    .lang-toggle{display:flex;gap:8px;margin-top:8px}
+    .badge{display:inline-block;font-size:12px;background:#eef6ff;color:#084d91;padding:2px 8px;border-radius:999px;margin-left:6px}
+    .note{font-size:13px;color:var(--muted)}
+    footer{margin:36px 0 60px;color:var(--muted);font-size:14px}
+    .chip{display:inline-block;background:#eef4ff;border:1px solid #dbe7ff;color:#213a7b;padding:2px 8px;border-radius:999px;font-size:12px;margin-right:6px}
+    code{background:#fff;border:1px solid #eee;border-radius:6px;padding:1px 6px}
+    .grid{display:grid;grid-template-columns:1fr;gap:12px}
+    @media(min-width:760px){.grid{grid-template-columns:1fr 1fr}}
+  </style>
+  <script>
+    // Simple language toggle without frameworks
+    function showLang(lang){
+      document.querySelectorAll('[data-lang]').forEach(el=>{
+        el.style.display = (el.getAttribute('data-lang')===lang) ? 'block' : 'none';
+      });
+      document.querySelectorAll('[data-lang-btn]').forEach(btn=>{
+        btn.style.opacity = (btn.getAttribute('data-lang-btn')===lang) ? '1' : '.6';
+      });
+      location.hash = '#'+lang;
+    }
+    window.addEventListener('DOMContentLoaded',()=>{
+      const hash = location.hash.replace('#','');
+      showLang(hash==='en' ? 'en' : 'ko');
+    });
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Fatesight 개인정보 처리방침 <span class="badge">Privacy Policy</span></h1>
+      <div class="meta">시행일자(Effective Date): <strong>2025-09-07</strong></div>
+      <div class="lang-toggle">
+        <button data-lang-btn="ko" onclick="showLang('ko')">한국어 보기</button>
+        <button data-lang-btn="en" onclick="showLang('en')">View English</button>
+      </div>
+      <nav>
+        <a href="#ko" onclick="showLang('ko')">KO 정책</a>
+        <a href="#en" onclick="showLang('en')">EN Policy</a>
+      </nav>
+    </header>
+
+    <!-- ================= Korean ================= -->
+    <main data-lang="ko">
+      <section>
+        <h2>개요</h2>
+        <p>
+          본 개인정보 처리방침은 Fatesight(이하 “서비스”, 개발자: 김동하)가 이용자의 개인정보를 어떻게 수집·이용·보관·파기하는지에 대해 설명합니다.
+          Fatesight는 <span class="chip">타로</span>와 <span class="chip">사주</span> 정보를 결합하여
+          개인 맞춤형 운세 스토리를 <strong>텍스트로만</strong> 제공합니다.
+        </p>
+      </section>
+
+      <section>
+        <h2>1. 수집하는 개인정보 항목</h2>
+        <p>서비스는 맞춤형 운세 생성을 위해 아래 정보를 사용자가 직접 입력하는 경우에 한해 수집할 수 있습니다.</p>
+        <table>
+          <thead><tr><th>항목</th><th>세부 내용</th></tr></thead>
+          <tbody>
+            <tr><td>기본 식별 정보</td><td>이름(닉네임 가능)</td></tr>
+            <tr><td>생년월일/출생정보</td><td>생년월일(양/음력 여부 선택 가능 시 해당 옵션), 출생 시간(선택), 출생지(선택)</td></tr>
+            <tr><td>상담 주제</td><td>관심 분야·질문·키워드 등 사용자가 입력하는 텍스트</td></tr>
+            <tr><td>앱 사용 기록(로컬)</td><td>최근 본 운세 스토리, 카드 선택 기록 등 <strong>기기 내</strong> 저장 정보</td></tr>
+          </tbody>
+        </table>
+        <p class="note">※ 서비스는 계정 회원가입/로그인을 요구하지 않습니다.</p>
+      </section>
+
+      <section>
+        <h2>2. 수집 방법</h2>
+        <ul>
+          <li><strong>사용자 직접 입력</strong>: 운세 생성을 위해 화면에서 입력한 정보만 수집합니다.</li>
+          <li><strong>자동 수집 없음</strong>: 광고 SDK, 외부 분석 SDK, 추적용 식별자(IDFA/GAID) 등은 사용하지 않습니다.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>3. 이용 목적 및 법적 근거</h2>
+        <table>
+          <thead><tr><th>이용 목적</th><th>처리 항목</th><th>법적 근거</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>맞춤형 운세 스토리 생성</td>
+              <td>이름, 생년월일/출생시간, 상담 주제</td>
+              <td>사용자 <strong>동의</strong> 및 계약의 이행(서비스 제공)</td>
+            </tr>
+            <tr>
+              <td>최근 기록 표시(로컬)</td>
+              <td>최근 본 운세, 카드 선택 등</td>
+              <td>정상적인 서비스 제공을 위한 정당한 이익</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>4. 보관 위치 및 보관 기간</h2>
+        <ul>
+          <li><strong>기기 내 저장</strong>: 최근 본 운세, 카드 선택 등의 기록은 사용자의 <strong>기기 내부</strong>에 보관됩니다.</li>
+          <li><strong>서버 보관 최소화</strong>: 계정을 사용하지 않으므로 당사 서버에 별도 개인식별 정보를 상시 보관하지 않습니다.</li>
+          <li><strong>보관 기간</strong>: 사용자가 앱 내에서 초기화하거나 앱을 삭제할 때까지 기기 내에 보관됩니다.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>5. 처리 위탁 및 제3자 제공</h2>
+        <ul>
+          <li><strong>제3자 제공</strong>: 이용자 정보를 판매하거나 임의로 제3자에게 제공하지 않습니다.</li>
+          <li><strong>AI 처리(국외 이전 포함)</strong>:
+            맞춤형 텍스트 생성을 위해 사용자가 입력한 운세 관련 정보가
+            <em>AI 모델 제공사</em>(예: OpenAI API 등)의 서버로 전송·처리될 수 있습니다.
+            전송되는 내용은 운세 생성에 필요한 최소한의 텍스트이며, 광고·추적 목적으로 사용되지 않습니다.
+            제공사는 자체 정책과 보안 기준에 따라 데이터를 처리합니다. 자세한 내용은 OpenAI의
+            정책 페이지(<a href="https://openai.com/policies" target="_blank" rel="noopener">https://openai.com/policies</a>)를 참고하십시오.
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>6. 이용자의 권리</h2>
+        <ul>
+          <li><strong>열람·정정·삭제</strong>: 앱 내 초기화 기능(제공 시) 또는 앱 삭제로 기기 내 데이터가 제거됩니다.</li>
+          <li><strong>동의 철회</strong>: 운세 생성을 위한 정보 제공을 원치 않을 경우 입력하지 않으면 됩니다.</li>
+          <li><strong>문의</strong>: 아래 연락처로 권리 행사를 요청할 수 있습니다.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>7. 아동의 개인정보</h2>
+        <p>만 14세 미만 아동을 대상으로 서비스를 제공하지 않으며, 해당 연령의 정보를 알고 수집하지 않습니다.</p>
+      </section>
+
+      <section>
+        <h2>8. 보안 조치</h2>
+        <ul>
+          <li>전송 구간 암호화(HTTPS)</li>
+          <li>최소 수집·최소 전송 원칙 준수</li>
+          <li>기기 로컬 저장 정보는 OS 보안 정책을 따릅니다.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>9. 개인정보 보호책임자</h2>
+        <p>
+          책임자: 김동하<br/>
+          이메일: <a href="mailto:samdongpm@gmail.com">samdongpm@gmail.com</a>
+        </p>
+      </section>
+
+      <section>
+        <h2>10. 정책 변경</h2>
+        <p>정책을 개정하는 경우 앱 내 공지 또는 이 페이지를 통해 고지합니다. 중대한 변경의 경우 합리적인 기간 전 사전 고지합니다.</p>
+      </section>
+
+      <section>
+        <h2>요약(한 줄)</h2>
+        <p class="note">Fatesight는 사용자가 입력한 최소한의 운세 정보만을 운세 생성 목적에 한해 사용하며, 주요 데이터는 기기 내에 보관됩니다. AI 텍스트 생성을 위해 필요한 범위에서만 신뢰할 수 있는 처리자(예: OpenAI)로 전송됩니다.</p>
+      </section>
+    </main>
+
+    <!-- ================= English ================= -->
+    <main data-lang="en">
+      <section>
+        <h2>Overview</h2>
+        <p>
+          This Privacy Policy explains how Fatesight (“the Service”, developer: Dongha Kim) collects,
+          uses, stores, and deletes personal information. Fatesight combines
+          <span class="chip">Tarot</span> and <span class="chip">Saju (Four Pillars)</span> to deliver
+          personalized fortune stories in <strong>text-only</strong> form.
+        </p>
+      </section>
+
+      <section>
+        <h2>1) Data We Collect</h2>
+        <p>We collect the following information only when you enter it to generate your fortune:</p>
+        <table>
+          <thead><tr><th>Category</th><th>Details</th></tr></thead>
+          <tbody>
+            <tr><td>Basic Identifier</td><td>Name (nickname acceptable)</td></tr>
+            <tr><td>Birth Information</td><td>Date of birth (and lunar/solar option if provided), birth time (optional), birthplace (optional)</td></tr>
+            <tr><td>Topic</td><td>Your question, area of interest, or keywords</td></tr>
+            <tr><td>On-device History</td><td>Recently viewed fortunes, tarot selections, stored <strong>locally on your device</strong></td></tr>
+          </tbody>
+        </table>
+        <p class="note">No account sign-up or login is required.</p>
+      </section>
+
+      <section>
+        <h2>2) How We Collect</h2>
+        <ul>
+          <li><strong>User Input</strong>: Only the information you type into the app is collected.</li>
+          <li><strong>No automatic tracking</strong>: No ads SDKs, analytics SDKs, or ad IDs (IDFA/GAID) are used.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>3) Purpose & Legal Basis</h2>
+        <table>
+          <thead><tr><th>Purpose</th><th>Data</th><th>Legal Basis</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Generate personalized fortune text</td>
+              <td>Name, birth data, topic</td>
+              <td>Your <strong>consent</strong> and contract performance (service delivery)</td>
+            </tr>
+            <tr>
+              <td>Show recent history (on-device)</td>
+              <td>Recently viewed fortunes, tarot choices</td>
+              <td>Legitimate interest to provide core functionality</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>4) Storage Location & Retention</h2>
+        <ul>
+          <li><strong>On-device storage</strong>: Recent items and selections are stored locally on your device.</li>
+          <li><strong>Minimal server retention</strong>: We do not operate user accounts; we do not keep personally identifying data on our servers on a persistent basis.</li>
+          <li><strong>Retention</strong>: Remains until you reset in-app (if available) or uninstall the app.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>5) Processors & Third-Party Sharing</h2>
+        <ul>
+          <li><strong>No sale or arbitrary sharing</strong> of your information.</li>
+          <li><strong>AI processing (including cross-border transfer)</strong>:
+            To generate text, the fortune input you provide may be sent to
+            <em>AI model providers</em> (e.g., OpenAI API) for processing.
+            Only the minimum text necessary is transmitted; it is not used for ads or tracking by us.
+            Providers process data under their own policies and security controls. See OpenAI Policies:
+            <a href="https://openai.com/policies" target="_blank" rel="noopener">https://openai.com/policies</a>.
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>6) Your Rights</h2>
+        <ul>
+          <li><strong>Access/Rectification/Deletion</strong>: Use in-app reset (if available) or uninstall the app to remove on-device data.</li>
+          <li><strong>Withdraw consent</strong>: Simply do not provide inputs if you do not want your data processed for fortune generation.</li>
+          <li><strong>Contact</strong>: You may exercise your rights via the email below.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>7) Children’s Privacy</h2>
+        <p>The Service is not directed to children under the age of 14, and we do not knowingly collect their data.</p>
+      </section>
+
+      <section>
+        <h2>8) Security</h2>
+        <ul>
+          <li>Transport encryption (HTTPS)</li>
+          <li>Data minimization for collection and transmission</li>
+          <li>On-device storage relies on OS-level protections</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>9) Data Controller</h2>
+        <p>
+          Controller: Dongha Kim<br/>
+          Email: <a href="mailto:samdongpm@gmail.com">samdongpm@gmail.com</a>
+        </p>
+      </section>
+
+      <section>
+        <h2>10) Changes to This Policy</h2>
+        <p>We will notify changes in-app or on this page. For material changes, we will provide reasonable advance notice.</p>
+      </section>
+
+      <section>
+        <h2>One-line Summary</h2>
+        <p class="note">Fatesight uses the minimum user-entered information solely to generate fortunes, stores key data on your device, and transmits only what’s necessary to trusted AI processors (e.g., OpenAI) for text generation.</p>
+      </section>
+    </main>
+
+    <footer>
+      © 2025 Fatesight. All rights reserved.
+    </footer>
+  </div>
+</body>
+</html>
