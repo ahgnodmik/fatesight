@@ -1,0 +1,114 @@
+{
+  "appTitle": "Fatesight",
+  "fortuneStory": "Fortune Story",
+  "serviceDescription": "Get personalized fortune stories based on your birth date and time using Korean astrology",
+  "listenToStories": "Listen to Stories",
+  "recentStory": "Recent Story",
+  "viewAgain": "View Again",
+  "analyzingDestiny": "Analyzing Destiny",
+  "pleaseWait": "Please wait while we analyze your destiny...",
+  "enterName": "Enter Name",
+  "birthDate": "Birth Date",
+  "birthTime": "Birth Time",
+  "question": "Question",
+  "nameHint": "Your name",
+  "questionHint": "What would you like to know?",
+  "getFortuneStory": "Get Fortune Story",
+  "tarotTitle": "Tarot Cards",
+  "dragToSelectCard": "Drag to select a card",
+  "checkFortune": "Check Fortune",
+  "selectCard": "Select Card",
+  "drawAgain": "Draw Again",
+  "home": "Home",
+  "selectionComplete": "Selection Complete",
+  "selectedCard": "Selected Card",
+  "checkFortuneText": "Check your fortune",
+  "tapToConfirm": "Tap to confirm",
+  "cardSelection": "Card {current} of {total}",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  "@fortuneStory": {
+    "description": "The title for fortune story feature"
+  },
+  "@serviceDescription": {
+    "description": "Description of the service"
+  },
+  "@listenToStories": {
+    "description": "Button text to listen to stories"
+  },
+  "@recentStory": {
+    "description": "Title for recent story section"
+  },
+  "@viewAgain": {
+    "description": "Button text to view story again"
+  },
+  "@analyzingDestiny": {
+    "description": "Text shown while analyzing destiny"
+  },
+  "@pleaseWait": {
+    "description": "Text asking user to wait"
+  },
+  "@enterName": {
+    "description": "Label for name input field"
+  },
+  "@birthDate": {
+    "description": "Label for birth date field"
+  },
+  "@birthTime": {
+    "description": "Label for birth time field"
+  },
+  "@question": {
+    "description": "Label for question field"
+  },
+  "@nameHint": {
+    "description": "Hint text for name field"
+  },
+  "@questionHint": {
+    "description": "Hint text for question field"
+  },
+  "@getFortuneStory": {
+    "description": "Button text to get fortune story"
+  },
+  "@tarotTitle": {
+    "description": "Title for tarot screen"
+  },
+  "@dragToSelectCard": {
+    "description": "Instruction text for card selection"
+  },
+  "@checkFortune": {
+    "description": "Button text to check fortune"
+  },
+  "@selectCard": {
+    "description": "Button text to select card"
+  },
+  "@drawAgain": {
+    "description": "Button text to draw again"
+  },
+  "@home": {
+    "description": "Button text for home"
+  },
+  "@selectionComplete": {
+    "description": "Text when selection is complete"
+  },
+  "@selectedCard": {
+    "description": "Text for selected card"
+  },
+  "@checkFortuneText": {
+    "description": "Text to check fortune"
+  },
+  "@tapToConfirm": {
+    "description": "Text to tap to confirm"
+  },
+  "@cardSelection": {
+    "description": "Card selection progress text",
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  }
+}

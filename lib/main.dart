@@ -2,10 +2,43 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'services/openai_service.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
+import 'providers/language_provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:fatesight/l10n/app_localizations.dart';
+import 'services/admob_service.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'screens/home_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: '.env');
+  
+  // Load .env file safely
+  try {
+    await dotenv.load(fileName: 'assets/.env');
+    print('✅ .env file loaded successfully');
+    print('🔑 API Key exists: ${dotenv.env['OPENAI_API_KEY'] != null && dotenv.env['OPENAI_API_KEY']!.isNotEmpty}');
+  } catch (e) {
+    print('❌ Warning: Could not load .env file: $e');
+  }
+  
+  // Initialize Firebase safely
+  try {
+    await Firebase.initializeApp();
+  } catch (e) {
+    print('Warning: Firebase initialization failed: $e');
+  }
+  
+  // Initialize AdMob safely
+  try {
+    await AdMobService.initialize();
+  } catch (e) {
+    print('Warning: AdMob initialization failed: $e');
+  }
+  
   runApp(const MyApp());
 }
 
@@ -18,116 +51,38 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ChatProvider(OpenAIService())),
+        ChangeNotifierProvider(create: (_) => LanguageProvider()),
       ],
-      child: MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: const ChatPage(),
-    ));
-  }
-}
-
-class ChatPage extends StatefulWidget {
-  const ChatPage({super.key});
-
-  @override
-  State<ChatPage> createState() => _ChatPageState();
-}
-
-class _ChatPageState extends State<ChatPage> {
-  final TextEditingController _controller = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    final chat = context.watch<ChatProvider>();
-    return Scaffold(
-      appBar: AppBar(title: const Text('Fatesight')),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.all(16),
-              itemCount: chat.messages.length,
-              itemBuilder: (context, index) {
-                final m = chat.messages[index];
-                return Align(
-                  alignment: m.role == 'user'
-                      ? Alignment.centerRight
-                      : Alignment.centerLeft,
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(vertical: 6),
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 14),
-                    decoration: BoxDecoration(
-                      color: m.role == 'user'
-                          ? Theme.of(context)
-                              .colorScheme
-                              .primary
-                              .withOpacity(0.1)
-                          : Theme.of(context)
-                              .colorScheme
-                              .surfaceContainerHighest,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(m.content),
-                  ),
-                );
-              },
+      child: Consumer<LanguageProvider>(
+        builder: (context, languageProvider, child) {
+          return MaterialApp(
+            title: 'Fatesight',
+            theme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+              textTheme: GoogleFonts.notoSansTextTheme(
+                Theme.of(context).textTheme,
+              ),
             ),
-          ),
-          if (chat.isLoading)
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: LinearProgressIndicator(minHeight: 2),
-            ),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _controller,
-                    decoration: const InputDecoration(
-                      hintText: '메시지를 입력하세요...',
-                      border: OutlineInputBorder(),
-                    ),
-                    onSubmitted: (_) => _send(context),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                IconButton(
-                  onPressed: chat.isLoading ? null : () => _send(context),
-                  icon: const Icon(Icons.send),
-                )
-              ],
-            ),
-          )
-        ],
+            locale: languageProvider.locale,
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: const [
+              Locale('en', ''),
+              Locale('ko', ''),
+            ],
+            navigatorObservers: [
+              if (Firebase.apps.isNotEmpty)
+                FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
+            ],
+            home: const HomeScreen(),
+          );
+        },
       ),
     );
   }
-
-  Future<void> _send(BuildContext context) async {
-    final text = _controller.text.trim();
-    if (text.isEmpty) return;
-    _controller.clear();
-    await context.read<ChatProvider>().sendMessage(text);
-  }
 }
+
