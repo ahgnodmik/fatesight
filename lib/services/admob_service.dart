@@ -68,6 +68,11 @@ class AdMobService {
   
   static RewardedInterstitialAd? _interstitialAd;
 
+  // 전면광고 최소 간격 — 연속 노출로 인한 이탈 방지.
+  // 콘솔의 게재빈도 설정과 별개로 동작하는 클라이언트 하한선.
+  static const Duration _interstitialCooldown = Duration(minutes: 3);
+  static DateTime? _lastInterstitialShownAt;
+
   static void loadInterstitialAd() {
     RewardedInterstitialAd.load(
       adUnitId: interstitialAdUnitId,
@@ -85,7 +90,12 @@ class AdMobService {
   }
 
   static void showInterstitialAd() {
+    final last = _lastInterstitialShownAt;
+    if (last != null && DateTime.now().difference(last) < _interstitialCooldown) {
+      return;
+    }
     if (_interstitialAd != null) {
+      _lastInterstitialShownAt = DateTime.now();
       _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
         onAdShowedFullScreenContent: (ad) {
           print('Rewarded interstitial ad showed full screen content');
