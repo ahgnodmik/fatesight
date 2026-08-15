@@ -42,6 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (_bannerAd != null) {
       _bannerAd!.load();
     }
+    AdMobService.loadInterstitialAd();
     _loadHistory();
   }
 
@@ -142,6 +143,8 @@ class _HomeScreenState extends State<HomeScreen> {
       _result = '';
       _userCharacter = null;
     });
+    // 리딩을 다 본 뒤가 자연스러운 광고 시점 — 로드 실패 시 조용히 건너뜀
+    AdMobService.showInterstitialAd();
   }
 
   Future<void> _openFortuneInput() async {
