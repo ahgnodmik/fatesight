@@ -3,11 +3,13 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 class AdMobService {
   // Test Ad Unit IDs (replace with your actual IDs for production)
   static const String _testBannerAdUnitId = 'ca-app-pub-3940256099942544/6300978111';
-  static const String _testInterstitialAdUnitId = 'ca-app-pub-3940256099942544/1033173712';
+  // 보상형 전면광고 테스트 단위
+  static const String _testInterstitialAdUnitId = 'ca-app-pub-3940256099942544/5354046379';
   static const String _testAppId = 'ca-app-pub-3940256099942544~3347511713';
-  
+
   // Production Ad Unit IDs (replace with your actual IDs)
   static const String _productionBannerAdUnitId = 'ca-app-pub-8527804772343765/8943630725';
+  // 보상형 전면광고(rewarded interstitial) 형식 단위
   static const String _productionInterstitialAdUnitId = 'ca-app-pub-8527804772343765/8766250560';
   static const String _productionAppId = 'ca-app-pub-8527804772343765~6177603256';
 
@@ -64,43 +66,44 @@ class AdMobService {
     }
   }
   
-  static InterstitialAd? _interstitialAd;
-  
+  static RewardedInterstitialAd? _interstitialAd;
+
   static void loadInterstitialAd() {
-    InterstitialAd.load(
+    RewardedInterstitialAd.load(
       adUnitId: interstitialAdUnitId,
       request: const AdRequest(),
-      adLoadCallback: InterstitialAdLoadCallback(
+      rewardedInterstitialAdLoadCallback: RewardedInterstitialAdLoadCallback(
         onAdLoaded: (ad) {
           _interstitialAd = ad;
-          print('Interstitial ad loaded');
+          print('Rewarded interstitial ad loaded');
         },
         onAdFailedToLoad: (error) {
-          print('Interstitial ad failed to load: $error');
+          print('Rewarded interstitial ad failed to load: $error');
         },
       ),
     );
   }
-  
+
   static void showInterstitialAd() {
     if (_interstitialAd != null) {
       _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
         onAdShowedFullScreenContent: (ad) {
-          print('Interstitial ad showed full screen content');
+          print('Rewarded interstitial ad showed full screen content');
         },
         onAdDismissedFullScreenContent: (ad) {
-          print('Interstitial ad dismissed');
+          print('Rewarded interstitial ad dismissed');
           ad.dispose();
           _interstitialAd = null;
           loadInterstitialAd(); // Load next ad
         },
         onAdFailedToShowFullScreenContent: (ad, error) {
-          print('Interstitial ad failed to show: $error');
+          print('Rewarded interstitial ad failed to show: $error');
           ad.dispose();
           _interstitialAd = null;
         },
       );
-      _interstitialAd!.show();
+      // 보상형 전면 — 현재 앱은 보상 경제가 없어 리워드는 미사용
+      _interstitialAd!.show(onUserEarnedReward: (ad, reward) {});
     }
   }
   
