@@ -43,10 +43,11 @@ class SajuInterpretation {
     final isKo = language == 'ko';
     final service = SajuService();
 
+    // ResultDisplay는 플레인 텍스트 렌더 — 마크다운 문법 사용 금지
     String section(String category, String key) {
       final entry = (data[category] as Map<String, dynamic>)[key];
       if (entry == null) return '';
-      return '**${entry['title']}**\n${entry['text']}';
+      return '✦ ${entry['title']}\n${entry['text']}';
     }
 
     final pillarLabels = [
@@ -69,8 +70,8 @@ class SajuInterpretation {
           : "🔮 $name's Four Pillars\n${pillarLabels.join('  |  ')}",
       section('ilgan', saju.ilganKo),
       isKo
-          ? '**오행 분포**\n$distribution'
-          : '**Five Elements**\n$distribution',
+          ? '✦ 오행 분포\n$distribution'
+          : '✦ Five Elements\n$distribution',
       section('element_dominant', saju.dominantElement),
       for (final missing in saju.missingElements)
         section('element_missing', missing),

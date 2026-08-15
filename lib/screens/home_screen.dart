@@ -127,95 +127,102 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: const Color(0xFFFAFAFA),
-      body: Column(
-        children: [
-          // 상단 서비스 안내 배너 - 분석 중이거나 결과 화면일 때는 숨김
-          if (!_isLoading && !_showResult) _buildServiceBanner(),
+    return PopScope(
+      // 결과 화면에서 시스템 뒤로가기 시 앱 종료 대신 홈으로 복귀
+      canPop: !_showResult,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop && _showResult) _onBackToForm();
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: const Color(0xFFFAFAFA),
+        body: Column(
+          children: [
+            // 상단 서비스 안내 배너 - 분석 중이거나 결과 화면일 때는 숨김
+            if (!_isLoading && !_showResult) _buildServiceBanner(),
 
-          // 스토리 이력 (1개만) - 서비스 배너 아래에 표시
-          if (_storyHistory.isNotEmpty && !_showResult && !_isLoading)
-            _buildStoryHistory(),
+            // 스토리 이력 (1개만) - 서비스 배너 아래에 표시
+            if (_storyHistory.isNotEmpty && !_showResult && !_isLoading)
+              _buildStoryHistory(),
 
-          // 메인 콘텐츠
-          Expanded(
-            child:
-                _isLoading
-                    ? _buildLoadingWidget()
-                    : _showResult
-                    ? ResultDisplay(
-                      result: _result,
-                      onBack: _onBackToForm,
-                      userCharacter: _userCharacter,
-                    )
-                    : _buildWelcomeScreen(),
-          ),
-
-          // 하단 광고 배너 (시스템 내비게이션 영역 침범 방지)
-          if (_bannerAd != null)
-            SafeArea(
-              top: false,
-              child: Container(
-                alignment: Alignment.center,
-                width: _bannerAd!.size.width.toDouble(),
-                height: _bannerAd!.size.height.toDouble(),
-                color: Colors.white,
-                child: AdWidget(ad: _bannerAd!),
-              ),
+            // 메인 콘텐츠
+            Expanded(
+              child:
+                  _isLoading
+                      ? _buildLoadingWidget()
+                      : _showResult
+                      ? ResultDisplay(
+                        result: _result,
+                        onBack: _onBackToForm,
+                        userCharacter: _userCharacter,
+                      )
+                      : _buildWelcomeScreen(),
             ),
-        ],
-      ),
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        centerTitle: true,
-        title: Text(
-          l10n.appTitle,
-          style: const TextStyle(
-            color: Color(0xFF1F2937),
-            fontWeight: FontWeight.w600,
-            fontSize: 20,
-          ),
-        ),
-        actions: [
-          Consumer<LanguageProvider>(
-            builder: (context, languageProvider, child) {
-              final currentLanguage = languageProvider.locale.languageCode;
-              final displayText = currentLanguage == 'ko' ? 'KR' : 'EN';
 
-              return GestureDetector(
-                onTap: () {
-                  languageProvider.toggleLanguage();
-                },
+            // 하단 광고 배너 (시스템 내비게이션 영역 침범 방지)
+            if (_bannerAd != null)
+              SafeArea(
+                top: false,
                 child: Container(
-                  margin: const EdgeInsets.only(right: 16),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 4,
-                  ),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF8B5CF6).withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: const Color(0xFF8B5CF6).withOpacity(0.3),
-                      width: 1,
-                    ),
-                  ),
-                  child: Text(
-                    displayText,
-                    style: const TextStyle(
-                      color: Color(0xFF8B5CF6),
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14,
-                    ),
-                  ),
+                  alignment: Alignment.center,
+                  width: _bannerAd!.size.width.toDouble(),
+                  height: _bannerAd!.size.height.toDouble(),
+                  color: Colors.white,
+                  child: AdWidget(ad: _bannerAd!),
                 ),
-              );
-            },
+              ),
+          ],
+        ),
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          centerTitle: true,
+          title: Text(
+            l10n.appTitle,
+            style: const TextStyle(
+              color: Color(0xFF1F2937),
+              fontWeight: FontWeight.w600,
+              fontSize: 20,
+            ),
           ),
-        ],
+          actions: [
+            Consumer<LanguageProvider>(
+              builder: (context, languageProvider, child) {
+                final currentLanguage = languageProvider.locale.languageCode;
+                final displayText = currentLanguage == 'ko' ? 'KR' : 'EN';
+
+                return GestureDetector(
+                  onTap: () {
+                    languageProvider.toggleLanguage();
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.only(right: 16),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF8B5CF6).withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: const Color(0xFF8B5CF6).withOpacity(0.3),
+                        width: 1,
+                      ),
+                    ),
+                    child: Text(
+                      displayText,
+                      style: const TextStyle(
+                        color: Color(0xFF8B5CF6),
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
