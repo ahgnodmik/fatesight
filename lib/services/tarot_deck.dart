@@ -15,6 +15,8 @@ class TarotCard {
   final String reversedEn;
   final String fortuneKo;
   final String fortuneEn;
+  final String fortuneRevKo;
+  final String fortuneRevEn;
 
   TarotCard.fromJson(Map<String, dynamic> json)
       : id = json['id'] as int,
@@ -26,13 +28,17 @@ class TarotCard {
         reversedKo = json['reversed_ko'] as String,
         reversedEn = json['reversed_en'] as String,
         fortuneKo = json['fortune_ko'] as String,
-        fortuneEn = json['fortune_en'] as String;
+        fortuneEn = json['fortune_en'] as String,
+        fortuneRevKo = json['fortune_rev_ko'] as String,
+        fortuneRevEn = json['fortune_rev_en'] as String;
 
   String name(bool isKorean) => isKorean ? nameKo : nameEn;
   String meaning(bool isKorean, {required bool reversed}) => reversed
       ? (isKorean ? reversedKo : reversedEn)
       : (isKorean ? meaningKo : meaningEn);
-  String fortune(bool isKorean) => isKorean ? fortuneKo : fortuneEn;
+  String fortune(bool isKorean, {required bool reversed}) => reversed
+      ? (isKorean ? fortuneRevKo : fortuneRevEn)
+      : (isKorean ? fortuneKo : fortuneEn);
 
   Color get color => switch (suit) {
         'major' => const Color(0xFF7C3AED), // 보라

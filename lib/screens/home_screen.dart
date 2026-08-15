@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fatesight/l10n/app_localizations.dart';
 import '../providers/language_provider.dart';
 import '../services/admob_service.dart';
@@ -30,6 +33,8 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Map<String, dynamic>> _storyHistory = [];
   ZodiacCharacter? _userCharacter;
 
+  static const _historyPrefsKey = 'story_history_v1';
+
   @override
   void initState() {
     super.initState();
@@ -37,6 +42,42 @@ class _HomeScreenState extends State<HomeScreen> {
     if (_bannerAd != null) {
       _bannerAd!.load();
     }
+    _loadHistory();
+  }
+
+  Future<void> _loadHistory() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final raw = prefs.getString(_historyPrefsKey);
+      if (raw == null) return;
+      final data = jsonDecode(raw) as Map<String, dynamic>;
+      if (!mounted) return;
+      setState(() {
+        _storyHistory = [
+          {
+            'name': data['name'] as String,
+            'birthDateTime': DateTime.parse(data['birthDateTime'] as String),
+            'result': data['result'] as String,
+            'timestamp': DateTime.parse(data['timestamp'] as String),
+          },
+        ];
+      });
+    } catch (_) {
+      // 손상된 저장값은 무시하고 빈 히스토리로 시작
+    }
+  }
+
+  Future<void> _saveHistory(Map<String, dynamic> story) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(
+      _historyPrefsKey,
+      jsonEncode({
+        'name': story['name'],
+        'birthDateTime': (story['birthDateTime'] as DateTime).toIso8601String(),
+        'result': story['result'],
+        'timestamp': (story['timestamp'] as DateTime).toIso8601String(),
+      }),
+    );
   }
 
   @override
@@ -83,6 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
           'timestamp': DateTime.now(),
         });
       });
+      _saveHistory(_storyHistory.first);
     } catch (e) {
       setState(() {
         _isLoading = false;

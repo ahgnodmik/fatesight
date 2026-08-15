@@ -18,6 +18,7 @@ void main() {
         c.meaningKo, c.meaningEn,
         c.reversedKo, c.reversedEn,
         c.fortuneKo, c.fortuneEn,
+        c.fortuneRevKo, c.fortuneRevEn,
       ]) {
         expect(field.trim(), isNotEmpty, reason: 'empty field on card ${c.id}');
       }

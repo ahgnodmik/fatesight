@@ -415,7 +415,8 @@ class _TarotScreenState extends State<TarotScreen>
                               ),
                               const SizedBox(height: 16),
                               Text(
-                                _selectedCard!.fortune(isKorean),
+                                _selectedCard!
+                                    .fortune(isKorean, reversed: _isReversed),
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,
