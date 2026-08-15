@@ -3,7 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:fatesight/l10n/app_localizations.dart';
 import '../providers/language_provider.dart';
 import '../services/admob_service.dart';
-import '../services/openai_service.dart';
+import '../services/saju_service.dart';
+import '../services/saju_interpretation.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../widgets/result_display.dart';
 import '../widgets/zodiac_character_widget.dart';
@@ -24,7 +25,8 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _showResult = false;
   bool _isLoading = false;
   String _result = '';
-  final OpenAIService _openAIService = OpenAIService();
+  final SajuService _sajuService = SajuService();
+  final SajuInterpretation _sajuInterpretation = SajuInterpretation();
   List<Map<String, dynamic>> _storyHistory = [];
   ZodiacCharacter? _userCharacter;
 
@@ -43,11 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
-  Future<void> _onFormSubmitted(
-    String name,
-    DateTime birthDateTime,
-    String question,
-  ) async {
+  Future<void> _onFormSubmitted(String name, DateTime birthDateTime) async {
     setState(() {
       _isLoading = true;
       _showResult = false;
@@ -63,10 +61,10 @@ class _HomeScreenState extends State<HomeScreen> {
         birthDateTime.year,
       );
 
-      final result = await _openAIService.generateFortuneStory(
+      final saju = _sajuService.calculate(birthDateTime);
+      final result = await _sajuInterpretation.buildReading(
         name: name,
-        birthDateTime: birthDateTime,
-        question: question,
+        saju: saju,
         language: language,
       );
 
@@ -81,7 +79,6 @@ class _HomeScreenState extends State<HomeScreen> {
         _storyHistory.add({
           'name': name,
           'birthDateTime': birthDateTime,
-          'question': question,
           'result': result,
           'timestamp': DateTime.now(),
         });
@@ -117,33 +114,13 @@ class _HomeScreenState extends State<HomeScreen> {
       return;
     }
 
-    await _onFormSubmitted(result.name, result.birthDateTime, result.question);
+    await _onFormSubmitted(result.name, result.birthDateTime);
   }
 
   String _getErrorMessage(String language) {
-    if (language == 'ko') {
-      return '''
-❌ 오류가 발생했습니다
-
-API 키가 설정되지 않았거나 네트워크 연결에 문제가 있을 수 있습니다.
-
-.env 파일에 다음을 추가해주세요:
-OPENAI_API_KEY=your_api_key_here
-
-그 후 앱을 다시 시작해주세요.
-''';
-    } else {
-      return '''
-❌ An error occurred
-
-The API key may not be set or there may be a network connection issue.
-
-Please add the following to your .env file:
-OPENAI_API_KEY=your_api_key_here
-
-Then restart the app.
-''';
-    }
+    return language == 'ko'
+        ? '❌ 오류가 발생했습니다\n\n사주를 계산하는 중 문제가 생겼습니다. 입력한 생년월일시를 확인하고 다시 시도해주세요.'
+        : '❌ An error occurred\n\nSomething went wrong while calculating your reading. Please check your birth date and time, then try again.';
   }
 
   @override
@@ -523,17 +500,6 @@ Then restart the app.
           Text(
             '${story['name']} • ${_formatDate(story['birthDateTime'])}',
             style: const TextStyle(color: Color(0xFF6B7280), fontSize: 14),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            story['question'],
-            style: const TextStyle(
-              color: Color(0xFF1F2937),
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-            ),
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
           ),
           const SizedBox(height: 12),
           SizedBox(

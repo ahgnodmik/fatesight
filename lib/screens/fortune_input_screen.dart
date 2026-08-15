@@ -6,8 +6,7 @@ import '../providers/language_provider.dart';
 import '../widgets/date_combo_input.dart';
 import '../widgets/time_combo_input.dart';
 
-typedef FortuneFormResult =
-    ({String name, DateTime birthDateTime, String question});
+typedef FortuneFormResult = ({String name, DateTime birthDateTime});
 
 class FortuneInputScreen extends StatefulWidget {
   const FortuneInputScreen({super.key});
@@ -19,14 +18,11 @@ class FortuneInputScreen extends StatefulWidget {
 class _FortuneInputScreenState extends State<FortuneInputScreen> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
-  final _questionController = TextEditingController();
   final _scrollController = ScrollController();
   final _nameFocusNode = FocusNode();
-  final _questionFocusNode = FocusNode();
   final GlobalKey _nameFieldKey = GlobalKey();
   final GlobalKey _dateFieldKey = GlobalKey();
   final GlobalKey _timeFieldKey = GlobalKey();
-  final GlobalKey _questionFieldKey = GlobalKey();
   DateTime _selectedDate = DateTime.now();
   TimeOfDay _selectedTime = const TimeOfDay(hour: 12, minute: 0);
   bool _isFormValid = false;
@@ -35,12 +31,8 @@ class _FortuneInputScreenState extends State<FortuneInputScreen> {
   void initState() {
     super.initState();
     _nameController.addListener(_validateForm);
-    _questionController.addListener(_validateForm);
     _nameFocusNode.addListener(
       () => _handleFocus(_nameFieldKey, _nameFocusNode),
-    );
-    _questionFocusNode.addListener(
-      () => _handleFocus(_questionFieldKey, _questionFocusNode),
     );
     _validateForm();
   }
@@ -48,10 +40,8 @@ class _FortuneInputScreenState extends State<FortuneInputScreen> {
   @override
   void dispose() {
     _nameController.dispose();
-    _questionController.dispose();
     _scrollController.dispose();
     _nameFocusNode.dispose();
-    _questionFocusNode.dispose();
     super.dispose();
   }
 
@@ -80,15 +70,12 @@ class _FortuneInputScreenState extends State<FortuneInputScreen> {
       Navigator.of(context).pop<FortuneFormResult>((
         name: _nameController.text.trim(),
         birthDateTime: birthDateTime,
-        question: _questionController.text.trim(),
       ));
     }
   }
 
   void _validateForm() {
-    final isValid =
-        _nameController.text.trim().isNotEmpty &&
-        _questionController.text.trim().isNotEmpty;
+    final isValid = _nameController.text.trim().isNotEmpty;
     if (isValid != _isFormValid) {
       setState(() {
         _isFormValid = isValid;
@@ -239,61 +226,6 @@ class _FortuneInputScreenState extends State<FortuneInputScreen> {
                             label: l10n.birthTime,
                             isKorean: isKorean,
                             onFieldFocus: () => _ensureVisible(_timeFieldKey),
-                          ),
-                          const SizedBox(height: 20),
-                          Text(
-                            l10n.question,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: Color(0xFF1F2937),
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          KeyedSubtree(
-                            key: _questionFieldKey,
-                            child: TextFormField(
-                              controller: _questionController,
-                              focusNode: _questionFocusNode,
-                              onTap: () {
-                                if (_questionController.text.isNotEmpty) {
-                                  _questionController.selection = TextSelection(
-                                    baseOffset: 0,
-                                    extentOffset:
-                                        _questionController.text.length,
-                                  );
-                                }
-                              },
-                              maxLines: 3,
-                              decoration: InputDecoration(
-                                hintText: l10n.questionHint,
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  borderSide: const BorderSide(
-                                    color: Color(0xFFE5E7EB),
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  borderSide: const BorderSide(
-                                    color: Color(0xFF8B5CF6),
-                                    width: 2,
-                                  ),
-                                ),
-                                contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: 16,
-                                  vertical: 12,
-                                ),
-                              ),
-                              validator: (value) {
-                                if (value == null || value.trim().isEmpty) {
-                                  return isKorean
-                                      ? '궁금한 것을 입력해주세요'
-                                      : 'Please enter your question';
-                                }
-                                return null;
-                              },
-                            ),
                           ),
                           const SizedBox(height: 24),
                         ],

@@ -1,0 +1,130 @@
+{
+  "ilgan": {
+    "갑": {
+      "title": "Gap (甲) — The Great Tree",
+      "text": "You carry the energy of a tall tree growing straight toward the sky. A natural leader who values principles, you move toward your goals without wavering. Yet a rigid tree breaks in a storm — learning to bend with the wind will protect your strength."
+    },
+    "을": {
+      "title": "Eul (乙) — The Vine and Flower",
+      "text": "You carry the energy of a vine that bends gracefully and survives anywhere. Adaptable and sociable, you overcome the strong with softness. Beneath a gentle surface lies remarkable persistence. In decisive moments, show a clear stance so flexibility is never mistaken for indecision."
+    },
+    "병": {
+      "title": "Byeong (丙) — The Sun",
+      "text": "You carry the energy of the sun that shines on all things. Bright, passionate, and open-hearted, you naturally draw attention. Generous and free of grudges, you may still struggle with mood swings and quick boredom. Add steadiness, and your charisma becomes complete."
+    },
+    "정": {
+      "title": "Jeong (丁) — The Candle and Moonlight",
+      "text": "You carry the energy of a candle glowing in the dark. Delicate and devoted, you have the insight to illuminate exactly where light is needed. Warm outside, you burn with quiet passion within. Take time to care for yourself so you do not burn out lighting the way for others."
+    },
+    "무": {
+      "title": "Mu (戊) — The Great Mountain",
+      "text": "You carry the energy of a steadfast mountain. Trustworthy and responsible, you are the pillar others lean on. You are hard to shake, but that can make you slow to change — practice opening your mind to new currents, and fortune will flow your way."
+    },
+    "기": {
+      "title": "Gi (己) — The Fertile Field",
+      "text": "You carry the energy of rich soil that nurtures life. Embracing and attentive, you have a gift for growing people and caring for them, along with quiet practical wisdom. Hiding your heart too well can invite misunderstanding — share your feelings from time to time."
+    },
+    "경": {
+      "title": "Gyeong (庚) — Raw Iron and Rock",
+      "text": "You carry the energy of solid iron. Decisive and loyal, you cannot look away from injustice. You have the drive to push great things forward, though excessive force can cause friction. As iron must meet fire to become a fine sword, let trials forge your growth."
+    },
+    "신": {
+      "title": "Sin (辛) — The Jewel",
+      "text": "You carry the energy of a polished gem. Sharp senses, refined taste, and a touch of perfectionism define you. Strong pride and the desire for recognition fuel your progress. Sharp words can cut those close to you — shine without wounding, and your elegance deepens."
+    },
+    "임": {
+      "title": "Im (壬) — The Great Ocean",
+      "text": "You carry the energy of the ocean that receives every river. Broad-minded and wise, you read situations with remarkable insight. You love freedom and resist being tied down. As great waters flood without direction, set a clear goal and your wisdom becomes great achievement."
+    },
+    "계": {
+      "title": "Gye (癸) — Gentle Rain and Spring Water",
+      "text": "You carry the energy of rain that quietly soaks into all things. Deeply intuitive and sensitive, you move hearts with gentleness. Though you may seem delicate, like dripping water piercing stone, persistence is your weapon. On days when thoughts overflow, moving your body clears the current."
+    }
+  },
+  "sipsin": {
+    "bigyeon": {
+      "title": "Bigyeon — A Day of Standing Shoulder to Shoulder",
+      "text": "Energy similar to your own arrives today. Confidence and drive surge, but so does stubbornness. It is a good day for teamwork with friends and colleagues, though money matters are best kept separate and clear. Keep your own pace, but beware of running alone."
+    },
+    "geopjae": {
+      "title": "Geopjae — A Day of Rivalry",
+      "text": "Competitive spirit is stirred today. The urge to win can lift your performance, but spending and impulsive decisions grow too. Postpone large transactions, guarantees, and impulse shopping. Treat rivals as sparring partners who make you stronger, and the day works in your favor."
+    },
+    "siksin": {
+      "title": "Siksin — A Day of Abundance and Ease",
+      "text": "Energy of nourishment and expression flows in today. Creativity springs up, appetite improves, and the heart finds room to breathe. It is a fine day to share new ideas or a meal with someone you like. Enjoy it all — just watch out for overeating and idleness."
+    },
+    "sanggwan": {
+      "title": "Sanggwan — A Day of Brilliant Wit",
+      "text": "Your eloquence and wit shine today. Great for presentations, negotiations, and creative work — but sharp words may clash with superiors or rules. Today of all days, pause one beat before speaking. Channel the overflowing talent constructively and it becomes real achievement."
+    },
+    "pyeonjae": {
+      "title": "Pyeonjae — A Day of Moving Fortune",
+      "text": "The energy of flowing wealth arrives today. Unexpected income or opportunity may brush past — action itself becomes money. But what comes easily leaves easily: circulate big money wisely and avoid gambles. Widening your circle today can also lead to wealth."
+    },
+    "jeongjae": {
+      "title": "Jeongjae — A Day of Steady Wealth",
+      "text": "The energy of wealth built brick by brick. Work you have done consistently begins to bear fruit, and planned spending and saving shine. Today favors the ledger over the lottery. It is a fine day to show your diligence — trust itself becomes your asset."
+    },
+    "pyeongwan": {
+      "title": "Pyeongwan — A Day of Challenge and Pressure",
+      "text": "Tension fills the air today. Sudden tasks and responsibilities may pile up, but seeing them through becomes proof of your ability. Your body tires first, so pace your schedule. What looks like a crisis may in fact be the door to promotion."
+    },
+    "jeonggwan": {
+      "title": "Jeonggwan — A Day of Honor and Recognition",
+      "text": "The energy of order and honor arrives today. Handle your duties by the book and recognition from superiors will follow. The day favors official occasions, contracts, and interviews. Following the rules is today's fastest shortcut."
+    },
+    "pyeonin": {
+      "title": "Pyeonin — A Day of Inspiration",
+      "text": "Intuition sharpens today. Your eyes open to what others miss, though busy thoughts may slow your hands. It is the best of days for study, research, and planning. Time spent alone will bring you the answer."
+    },
+    "jeongin": {
+      "title": "Jeongin — A Day of Learning and Benefactors",
+      "text": "Supportive energy flows toward you today. Learning comes easily, and help from mentors or benefactors is near. Good news about documents, contracts, or qualifications may arrive. When helped, express your gratitude — that bond will last long."
+    }
+  },
+  "element_dominant": {
+    "wood": {
+      "title": "A Chart Rich in Wood",
+      "text": "Energy of growth and beginnings overflows in you. You love making plans, and you value kindness and just cause. With so much outward-reaching force, finishing can be the weak point — the habit of tying up what you start becomes a great asset."
+    },
+    "fire": {
+      "title": "A Chart Rich in Fire",
+      "text": "Energy of passion and expression overflows in you. Bright and radiant, you draw people in. When emotional flames rise, judgment can blur — letting important decisions rest overnight will spare you mistakes."
+    },
+    "earth": {
+      "title": "A Chart Rich in Earth",
+      "text": "Centering energy overflows in you. Prudent and dependable, you become the one others lean on. Yet too much caution can let chances slip — when you are seventy percent sure, it is safe to move."
+    },
+    "metal": {
+      "title": "A Chart Rich in Metal",
+      "text": "Energy of decision and loyalty overflows in you. Right and wrong are clear to you, and you finish what you cut into. That strength can turn sharp in relationships — one soft word completes your natural charisma."
+    },
+    "water": {
+      "title": "A Chart Rich in Water",
+      "text": "Energy of wisdom and flexibility overflows in you. You judge situations quickly and adapt anywhere. Deep thinking can breed deep worry — when the mind grows tangled, taking one step forward is the answer."
+    }
+  },
+  "element_missing": {
+    "wood": {
+      "title": "A Chart Missing Wood",
+      "text": "The energy of beginnings may run low. Waiting for the perfect moment can delay your start. Small habits that invite Wood — growing a plant, green accents, a morning walk — will help fill the gap."
+    },
+    "fire": {
+      "title": "A Chart Missing Fire",
+      "text": "The energy of expression may run low. The heart burns hot inside but struggles to show it, and that can cost you. Bright clothing, sunlight, and practicing putting feelings into words will kindle your Fire."
+    },
+    "earth": {
+      "title": "A Chart Missing Earth",
+      "text": "The centering energy may run low. You change quickly but find it hard to build patiently. Regular meals and sleep, and walks on bare earth, will restore Earth's steadiness."
+    },
+    "metal": {
+      "title": "A Chart Missing Metal",
+      "text": "The energy of decisive endings may run low. Warm-hearted, you struggle to say no and get caught in binds. Tidying your desk, letting go of clutter, and setting deadlines will sharpen your Metal."
+    },
+    "water": {
+      "title": "A Chart Missing Water",
+      "text": "The energy of flexibility may run low. Faithful to principle, you sometimes miss the flexible path. Drinking enough water, reading, and quiet time alone will deepen your Water and your wisdom."
+    }
+  }
+}

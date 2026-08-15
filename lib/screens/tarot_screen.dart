@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../providers/language_provider.dart';
 import '../widgets/zodiac_character_widget.dart';
 import '../models/zodiac_character.dart';
+import '../services/tarot_deck.dart';
 
 class TarotScreen extends StatefulWidget {
   const TarotScreen({super.key});
@@ -24,16 +25,16 @@ class _TarotScreenState extends State<TarotScreen>
   
   bool _isCardRevealed = false;
   bool _isFanMode = true;
-  Map<String, dynamic>? _selectedCard;
-  String? _fortuneText;
+  TarotCard? _selectedCard;
+  bool _isReversed = false;
   int _currentCardIndex = 0;
   double _dragOffset = 0.0;
   double _maxDragOffset = 0.0;
   bool _isCardSelected = false;
-  int _previousCardIndex = 0;
-  
+
   // 전체 타로 카드 수 (메이저+마이너 78장)
   final int _numTarotCards = 78;
+  List<TarotCard> _deck = const [];
 
   // 간단한 이모지 데코 목록
   static const List<String> _cardEmojis = [
@@ -44,99 +45,6 @@ class _TarotScreenState extends State<TarotScreen>
     return _cardEmojis[index % _cardEmojis.length];
   }
 
-  // 타로카드 데이터
-  final List<Map<String, dynamic>> _tarotCards = [
-    {
-      'name_ko': '더 풀(The Fool)',
-      'name_en': 'The Fool',
-      'meaning_ko': '새로운 시작, 순수함, 모험',
-      'meaning_en': 'New beginnings, innocence, adventure',
-      'fortune_ko': '오늘은 새로운 도전을 시작하기에 좋은 날입니다. 두려움 없이 앞으로 나아가세요.',
-      'fortune_en': 'Today is a good day to start new challenges. Move forward without fear.',
-      'color': Color(0xFF4F46E5), // 인디고
-    },
-    {
-      'name_ko': '더 매지션(The Magician)',
-      'name_en': 'The Magician',
-      'meaning_ko': '의지력, 창조력, 집중력',
-      'meaning_en': 'Willpower, creativity, concentration',
-      'fortune_ko': '당신의 능력과 재능을 활용할 수 있는 기회가 찾아올 것입니다.',
-      'fortune_en': 'An opportunity to utilize your abilities and talents will come.',
-      'color': Color(0xFFDC2626), // 빨강
-    },
-    {
-      'name_ko': '더 하이 프리스티스(The High Priestess)',
-      'name_en': 'The High Priestess',
-      'meaning_ko': '직감, 신비, 내면의 지혜',
-      'meaning_en': 'Intuition, mystery, inner wisdom',
-      'fortune_ko': '내면의 목소리에 귀 기울이세요. 직감이 중요한 결정을 도와줄 것입니다.',
-      'fortune_en': 'Listen to your inner voice. Intuition will help with important decisions.',
-      'color': Color(0xFF7C3AED), // 보라
-    },
-    {
-      'name_ko': '더 엠프레스(The Empress)',
-      'name_en': 'The Empress',
-      'meaning_ko': '풍요, 창조성, 모성',
-      'meaning_en': 'Abundance, creativity, motherhood',
-      'fortune_ko': '창조적 활동과 풍요로운 결과를 기대할 수 있습니다.',
-      'fortune_en': 'You can expect creative activities and abundant results.',
-      'color': Color(0xFF059669), // 초록
-    },
-    {
-      'name_ko': '더 엠퍼러(The Emperor)',
-      'name_en': 'The Emperor',
-      'meaning_ko': '권위, 안정, 리더십',
-      'meaning_en': 'Authority, stability, leadership',
-      'fortune_ko': '리더십을 발휘할 기회가 생길 것입니다. 확고한 의지로 목표를 달성하세요.',
-      'fortune_en': 'An opportunity to demonstrate leadership will arise. Achieve your goals with firm determination.',
-      'color': Color(0xFFD97706), // 주황
-    },
-    {
-      'name_ko': '더 히어로판트(The Hierophant)',
-      'name_en': 'The Hierophant',
-      'meaning_ko': '전통, 지혜, 가르침',
-      'meaning_en': 'Tradition, wisdom, teaching',
-      'fortune_ko': '전통적인 방법이나 멘토의 조언이 도움이 될 것입니다.',
-      'fortune_en': 'Traditional methods or mentor advice will be helpful.',
-      'color': Color(0xFF0891B2), // 청록
-    },
-    {
-      'name_ko': '더 러버스(The Lovers)',
-      'name_en': 'The Lovers',
-      'meaning_ko': '사랑, 선택, 조화',
-      'meaning_en': 'Love, choice, harmony',
-      'fortune_ko': '중요한 선택의 순간이 다가옵니다. 마음의 소리에 따라 결정하세요.',
-      'fortune_en': 'An important moment of choice is approaching. Decide according to your heart.',
-      'color': Color(0xFFEC4899), // 핑크
-    },
-    {
-      'name_ko': '더 채리엇(The Chariot)',
-      'name_en': 'The Chariot',
-      'meaning_ko': '의지력, 승리, 통제',
-      'meaning_en': 'Willpower, victory, control',
-      'fortune_ko': '강한 의지력으로 목표를 달성할 수 있습니다. 포기하지 마세요.',
-      'fortune_en': 'You can achieve your goals with strong willpower. Don\'t give up.',
-      'color': Color(0xFF7C2D12), // 갈색
-    },
-    {
-      'name_ko': '스트렝스(Strength)',
-      'name_en': 'Strength',
-      'meaning_ko': '내적 힘, 용기, 인내',
-      'meaning_en': 'Inner strength, courage, patience',
-      'fortune_ko': '어려운 상황에서도 내적 힘으로 극복할 수 있습니다.',
-      'fortune_en': 'You can overcome difficult situations with inner strength.',
-      'color': Color(0xFFB91C1C), // 진한 빨강
-    },
-    {
-      'name_ko': '더 허밋(The Hermit)',
-      'name_en': 'The Hermit',
-      'meaning_ko': '성찰, 내적 탐구, 지혜',
-      'meaning_en': 'Reflection, inner exploration, wisdom',
-      'fortune_ko': '혼자만의 시간을 갖고 내면을 성찰해보세요. 중요한 깨달음이 있을 것입니다.',
-      'fortune_en': 'Take time alone to reflect on your inner self. There will be important insights.',
-      'color': Color(0xFF6B7280), // 회색
-    },
-  ];
 
   @override
   void initState() {
@@ -188,7 +96,11 @@ class _TarotScreenState extends State<TarotScreen>
     
     // 최대 드래그 오프셋 계산 (카드 개수에 따라)
     _maxDragOffset = (_numTarotCards - 1) * 60.0;
-    
+
+    TarotDeck.load().then((deck) {
+      if (mounted) setState(() => _deck = deck);
+    });
+
     // 부채 애니메이션 시작
     _fanAnimationController.forward();
   }
@@ -210,7 +122,6 @@ class _TarotScreenState extends State<TarotScreen>
       
       // 카드 인덱스가 변경되었을 때
       if (newCardIndex != _currentCardIndex) {
-        _previousCardIndex = _currentCardIndex;
         _currentCardIndex = newCardIndex;
         _isCardSelected = false; // 새로운 카드 선택 시 선택 상태 리셋
       }
@@ -260,9 +171,12 @@ class _TarotScreenState extends State<TarotScreen>
       return;
     }
 
+    if (_deck.isEmpty) return; // 덱 로드 전 탭 무시
+
     // 카드 해석 노출 (부채 모드 유지)
     setState(() {
-      _selectedCard = _tarotCards[_currentCardIndex % _tarotCards.length];
+      _selectedCard = _deck[_currentCardIndex % _deck.length];
+      _isReversed = TarotDeck.drawReversed();
       _isCardRevealed = true;
       _isCardSelected = true;
       _isFanMode = true;
@@ -285,11 +199,10 @@ class _TarotScreenState extends State<TarotScreen>
       _isCardRevealed = false;
       _isFanMode = true;
       _selectedCard = null;
-      _fortuneText = null;
+      _isReversed = false;
       _currentCardIndex = 0;
       _dragOffset = 0.0;
       _isCardSelected = false;
-      _previousCardIndex = 0;
     });
     
     _cardAnimationController.reset();
@@ -461,7 +374,7 @@ class _TarotScreenState extends State<TarotScreen>
                           child: Column(
                             children: [
                               Text(
-                                isKorean ? _selectedCard!['name_ko'] : _selectedCard!['name_en'],
+                                _selectedCard!.name(isKorean),
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 20,
@@ -469,9 +382,31 @@ class _TarotScreenState extends State<TarotScreen>
                                 ),
                                 textAlign: TextAlign.center,
                               ),
+                              const SizedBox(height: 6),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 3),
+                                decoration: BoxDecoration(
+                                  color: _isReversed
+                                      ? const Color(0xFFB91C1C).withOpacity(0.4)
+                                      : const Color(0xFF10B981).withOpacity(0.3),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Text(
+                                  _isReversed
+                                      ? (isKorean ? '역방향' : 'Reversed')
+                                      : (isKorean ? '정방향' : 'Upright'),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
                               const SizedBox(height: 8),
                               Text(
-                                isKorean ? _selectedCard!['meaning_ko'] : _selectedCard!['meaning_en'],
+                                _selectedCard!
+                                    .meaning(isKorean, reversed: _isReversed),
                                 style: const TextStyle(
                                   color: Colors.white70,
                                   fontSize: 14,
@@ -480,7 +415,7 @@ class _TarotScreenState extends State<TarotScreen>
                               ),
                               const SizedBox(height: 16),
                               Text(
-                                isKorean ? _selectedCard!['fortune_ko'] : _selectedCard!['fortune_en'],
+                                _selectedCard!.fortune(isKorean),
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,
@@ -838,9 +773,7 @@ class _TarotScreenState extends State<TarotScreen>
 
 
   Widget _buildRevealedCard() {
-    final cardColor = _selectedCard![
-      'color'
-    ] as Color;
+    final cardColor = _selectedCard!.color;
 
     return Container(
       decoration: BoxDecoration(
